@@ -1,6 +1,8 @@
 import requests
 
-url = 'http://solarsystem.coffee:5004/up/sendmessage'
+DYNMAP_TARGET = "solarsystem.coffee:5004"
+
+url = f'http://{DYNMAP_TARGET}/up/sendmessage'
 
 def packet_data(message):
     return {
@@ -10,7 +12,7 @@ def packet_data(message):
 
 def headers(message):
     return {
-        'Host': 'solarsystem.coffee:5004',
+        'Host': DYNMAP_TARGET,
         'Connection': 'keep-alive',
         'Content-Length': str(len(message)),
         'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -20,8 +22,8 @@ def headers(message):
         'Content-Type': 'application/json; charset=UTF-8',
         'Sec-GPC': '1',
         'Accept-Language': 'en-US,en;q=0.5',
-        'Origin': 'http://solarsystem.coffee:5004',
-        'Referer': 'http://solarsystem.coffee:5004/',
+        'Origin': f'http://{DYNMAP_TARGET}',
+        'Referer': f'http://{DYNMAP_TARGET}/',
         'Accept-Encoding': 'gzip, deflate',
         # 'Cookie': 'JSESSIONID=node08yt0udk45lbwcniyufccce8r35.node0'
     }
