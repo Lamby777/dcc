@@ -1,8 +1,9 @@
 import socket
 
+host = 'solarsystem.coffee'
+port = 5004
+
 def create_request(message):
-    host = 'solarsystem.coffee'
-    port = 5004
     payload = f'{{"name":"","message":"{message}"}}'
     headers = f"""POST /up/sendmessage HTTP/1.1\r
 Host: {host}:{port}\r
@@ -23,42 +24,23 @@ Cookie: JSESSIONID=node08yt0udk45lbwcniyufccce8r35.node0\r
 {payload}"""
     return headers, payload
 
-def send_message(message):
-    host = 'solarsystem.coffee'
-    port = 5004
+with socket.create_connection((host, port)) as s:
+    while True:
+        try:
+            message = input("Enter message: ")
+        except (EOFError, KeyboardInterrupt):
+            break
 
-    headers, payload = create_request(message)
-    request = headers
+        headers, payload = create_request(message)
+        request = headers
 
-    # Create a socket and connect
-    with socket.create_connection((host, port)) as sock:
         # Send the request
-        sock.sendall(request.encode())
+        s.sendall(request.encode())
 
         # Receive the response
-        response = sock.recv(4096)
+        response = s.recv(4096)
         print(response.decode())
 
-# Example usage
-send_message("123")
+        print("")
 
-# while True:
-#     try:
-#         message = input("Enter message: ")
-#     except (EOFError, KeyboardInterrupt):
-#         break
-#
-#     # response = requests.post(url, headers=headers(message), json=packet_data(message))
-#     s.sendall(headers(message).encode())
-#     print(s.recv(1024))
-#
-#     # if response.status_code != 200:
-#     #     print("Error: " + str(response.status_code))
-#     #     print(response.text)
-#     #
-#     # if response.json()["error"] != "none":
-#     #     print("Error: " + response.json()["error"])
-#
-#     print("")
-#
-# print("\n\nGoodbye!")
+print("\n\nGoodbye!")
