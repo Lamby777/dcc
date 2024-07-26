@@ -23,7 +23,7 @@ def headers(message):
         'Origin': 'http://solarsystem.coffee:5004',
         'Referer': 'http://solarsystem.coffee:5004/',
         'Accept-Encoding': 'gzip, deflate',
-        'Cookie': 'JSESSIONID=node08yt0udk45lbwcniyufccce8r35.node0'
+        # 'Cookie': 'JSESSIONID=node08yt0udk45lbwcniyufccce8r35.node0'
     }
 
 
@@ -35,8 +35,13 @@ while True:
 
     response = requests.post(url, headers=headers(message), json=packet_data(message))
 
-    print(response.status_code)
-    print(response.text)
+    if response.status_code != 200:
+        print("Error: " + str(response.status_code))
+        print(response.text)
+
+    if response.json()["error"] != "none":
+        print("Error: " + response.json()["error"])
+
     print("")
 
 print("\n\nGoodbye!")
