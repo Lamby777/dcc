@@ -1,14 +1,10 @@
 import socket
 
-# Define the host and port
-host = 'solarsystem.coffee'
-port = 5004
-
-# Create the payload
-payload = '{"name":"","message":"test go brrr"}'
-
-# Create the request string
-request = f"""POST /up/sendmessage HTTP/1.1\r
+def create_request(message):
+    host = 'solarsystem.coffee'
+    port = 5004
+    payload = f'{{"name":"","message":"{message}"}}'
+    headers = f"""POST /up/sendmessage HTTP/1.1\r
 Host: {host}:{port}\r
 Connection: keep-alive\r
 Content-Length: {len(payload)}\r
@@ -25,15 +21,27 @@ Accept-Encoding: gzip, deflate\r
 Cookie: JSESSIONID=node08yt0udk45lbwcniyufccce8r35.node0\r
 \r
 {payload}"""
+    return headers, payload
 
-# Create a socket and connect
-with socket.create_connection((host, port)) as sock:
-    # Send the request
-    sock.sendall(request.encode())
+def send_message(message):
+    host = 'solarsystem.coffee'
+    port = 5004
 
-    # Receive the response
-    response = sock.recv(4096)
-    print(response.decode())
+    headers, payload = create_request(message)
+    request = headers
+
+    # Create a socket and connect
+    with socket.create_connection((host, port)) as sock:
+        # Send the request
+        sock.sendall(request.encode())
+
+        # Receive the response
+        response = sock.recv(4096)
+        print(response.decode())
+
+# Example usage
+send_message("123")
+
 # while True:
 #     try:
 #         message = input("Enter message: ")
