@@ -1,6 +1,9 @@
 import requests
 
-DYNMAP_TARGET = "solarsystem.coffee:5004"
+DYNMAP_DOMAIN = "solarsystem.coffee"
+DYNMAP_PORT = 5004
+
+DYNMAP_TARGET = f"{DYNMAP_DOMAIN}:{DYNMAP_PORT}"
 
 url = f'http://{DYNMAP_TARGET}/up/sendmessage'
 
