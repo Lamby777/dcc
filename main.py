@@ -32,7 +32,7 @@ def headers(message):
 while True:
     try:
         message = input("Enter message: ")
-    except KeyboardInterrupt:
+    except (EOFError, KeyboardInterrupt):
         break
 
     response = requests.post(url, headers=headers(message), json=packet_data(message))
