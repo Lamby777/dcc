@@ -1,14 +1,9 @@
 #!/usr/bin/env python
 import requests
 
-# DYNMAP_DOMAIN = "solarsystem.coffee"
-# DYNMAP_PORT = 5004
-
-# DYNMAP_TARGET = f"{DYNMAP_DOMAIN}:{DYNMAP_PORT}"
-DYNMAP_TARGET = input("Enter the target domain and port (e.g. 'solarsystem.coffee:5004'):\n")
+DYNMAP_TARGET = input("Enter the target domain and also port if applicable (e.g. 'solarsystem.coffee:5004'):\n")
 USE_HTTPS = input("Use HTTPS? (y/n)\n").lower() == "y"
 
-# url = f'http://{DYNMAP_TARGET}/up/sendmessage'
 url = f'http{"s" if USE_HTTPS else ""}://{DYNMAP_TARGET}/up/sendmessage'
 
 def packet_data(message):
