@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 import requests
 
-DYNMAP_TARGET = input("Enter the target domain and also port if applicable (e.g. 'solarsystem.coffee:5004'):\n")
-USE_HTTPS = input("Use HTTPS? (y/n)\n").lower() == "y"
+DYNMAP_TARGET = input(
+    "Enter the target domain and also port if applicable (e.g. 'solarsystem.coffee:5004'):\n"
+)
+USE_HTTPS = input('Use HTTPS? (y/n)\n').lower() == 'y'
 
 url = f'http{"s" if USE_HTTPS else ""}://{DYNMAP_TARGET}/up/sendmessage'
 
+
 def packet_data(message):
-    return {
-        "name": "",
-        "message": message
-    }
+    return {'name': '', 'message': message}
+
 
 def headers(message):
     return {
@@ -33,19 +34,21 @@ def headers(message):
 
 while True:
     try:
-        message = input("Enter message: ")
+        message = input('Enter message: ')
     except (EOFError, KeyboardInterrupt):
         break
 
-    response = requests.post(url, headers=headers(message), json=packet_data(message))
+    response = requests.post(
+        url, headers=headers(message), json=packet_data(message)
+    )
 
     if response.status_code != 200:
-        print("Error: " + str(response.status_code))
+        print('Error: ' + str(response.status_code))
         print(response.text)
 
-    if response.json()["error"] != "none":
-        print("Error: " + response.json()["error"])
+    if response.json()['error'] != 'none':
+        print('Error: ' + response.json()['error'])
 
-    print("")
+    print('')
 
-print("\n\nGoodbye!")
+print('\n\nGoodbye!')
