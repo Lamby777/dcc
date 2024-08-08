@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+VERSION = '0.1.0'
+
 import requests, argparse
 
 parser = argparse.ArgumentParser(
@@ -31,7 +33,7 @@ def headers(message):
         'Accept': 'application/json, text/javascript, */*; q=0.01',
         'DNT': '1',
         'X-Requested-With': 'XMLHttpRequest',
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+        'User-Agent': f'DCC/{VERSION}',
         'Content-Type': 'application/json; charset=UTF-8',
         'Sec-GPC': '1',
         'Accept-Language': 'en-US,en;q=0.5',
