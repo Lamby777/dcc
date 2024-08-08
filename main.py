@@ -1,12 +1,22 @@
 #!/usr/bin/env python
-import requests
+import requests, argparse
 
-DYNMAP_TARGET = input(
-    "Enter the target domain and also port if applicable (e.g. 'solarsystem.coffee:5004'):\n"
+parser = argparse.ArgumentParser(
+    prog='dcc',
+    description='Dynmap Chat Client',
+    add_help=False,
 )
-USE_HTTPS = input('Use HTTPS? (y/n)\n').lower() == 'y'
 
-url = f'http{"s" if USE_HTTPS else ""}://{DYNMAP_TARGET}/up/sendmessage'
+parser.add_argument('domain')
+parser.add_argument('-p', '--port', type=int)
+parser.add_argument('-ns', '--http', action='store_true')
+args = parser.parse_args()
+
+DYNMAP_TARGET = args.domain.strip()
+if args.port:
+    DYNMAP_TARGET += f':{args.port}'
+
+url = f'http{"s" if not args.http else ""}://{DYNMAP_TARGET}/up/sendmessage'
 
 
 def packet_data(message):
@@ -28,7 +38,6 @@ def headers(message):
         'Origin': f'http://{DYNMAP_TARGET}',
         'Referer': f'http://{DYNMAP_TARGET}/',
         'Accept-Encoding': 'gzip, deflate',
-        # 'Cookie': 'JSESSIONID=node08yt0udk45lbwcniyufccce8r35.node0'
     }
 
 
